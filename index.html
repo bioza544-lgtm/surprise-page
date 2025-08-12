@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>เซอร์ไพรส์แฟน 💖</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        overflow-x: hidden;
+        text-align: center;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        position: relative;
+        min-height: 100vh;
+    }
+    h1 {
+        margin-top: 15vh;
+        font-size: 2.5rem;
+        animation: fadeIn 2s ease-in-out;
+        z-index: 2;
+        position: relative;
+    }
+    #typingText {
+        font-size: 1.3rem;
+        max-width: 450px;
+        margin: 20px auto 0 auto;
+        min-height: 120px; /* ให้พื้นที่ข้อความ */
+        white-space: pre-wrap;
+        position: relative;
+        z-index: 2;
+    }
+    button {
+        margin: 20px 10px 0 10px;
+        padding: 12px 30px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        background: #ff6f91;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        border: none;
+        animation: fadeIn 6s ease-in-out;
+    }
+    button:hover {
+        background: #ff4d6d;
+    }
+    #surpriseContent {
+        margin-top: 30px;
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        animation: fadeIn 2s ease-in-out;
+        position: relative;
+        z-index: 2;
+    }
+    img {
+        max-width: 300px;
+        margin-top: 20px;
+        border-radius: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.3s ease;
+    }
+    img:hover {
+        transform: scale(1.05);
+    }
+    /* หัวใจลอย */
+    .heart {
+        position: fixed;
+        bottom: -30px;  
+        background: #ff4d6d;
+        transform: rotate(45deg);
+        animation: floatUp linear forwards;
+        opacity: 0.9;
+        filter: drop-shadow(0 0 3px rgba(255,77,109,0.7));
+        border-radius: 5px;
+        z-index: 1;
+        width: 20px;
+        height: 20px;
+    }
+    .heart::before, .heart::after {
+        content: '';
+        position: absolute;
+        background: #ff4d6d;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+    }
+    .heart::before {
+        top: -12.5px;
+        left: 0;
+    }
+    .heart::after {
+        left: -12.5px;
+        top: 0;
+    }
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) rotate(45deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-120vh) rotate(45deg);
+            opacity: 0;
+        }
+    }
+    /* หัวใจใหญ่ตอนกดตกลง */
+    #bigHeart {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 150px;
+        height: 150px;
+        background: #ff4d6d;
+        filter: drop-shadow(0 0 10px #ff4d6d);
+        transform-origin: center;
+        border-radius: 20px;
+        z-index: 10000;
+        pointer-events: none;
+    }
+    #bigHeart::before, #bigHeart::after {
+        content: '';
+        position: absolute;
+        background: #ff4d6d;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+    }
+    #bigHeart::before {
+        top: -75px;
+        left: 0;
+    }
+    #bigHeart::after {
+        left: -75px;
+        top: 0;
+    }
+    @keyframes bigHeartPop {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 1;}
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1;}
+        100% { transform: translate(-50%, -50%) scale(1) opacity: 0;}
+    }
+    /* Modal Background */
+    #modalOverlay {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Modal Content */
+    #modalContent {
+        background: white;
+        color: #333;
+        border-radius: 15px;
+        padding: 30px 40px;
+        max-width: 90vw;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        user-select: none;
+        position: relative;
+        min-width: 280px;
+    }
+    #modalContent p {
+        font-size: 1.3rem;
+        margin-bottom: 25px;
+    }
+    #modalButtons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    #modalButtons button {
+        background: #ff6f91;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    #modalButtons button:hover:enabled {
+        background: #ff4d6d;
+    }
+    #modalButtons button:disabled {
+        background: #ccc;
+        cursor: default;
+    }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg" />
+    </audio>
+    <audio id="heartBeatSound" src="https://actions.google.com/sounds/v1/heartbeats/heartbeat.wav"></audio>
+
+    <!-- หน้าแรก -->
+    <div id="introSection">
+        <h1>💌 ถึงคนพิเศษของเค้าา... 💌</h1>
+        <p>มีบางอย่างอยากบอกอ้วนนะ...</p>
+        <button id="startBtn">คลิกเพื่อดู</button>
+    </div>
+
+    <!-- เนื้อหาหลังคลิก -->
+    <div id="surpriseContent" style="display:none;">
+        <h1>💖 พี่รักหนูที่สุดในโลก.... 💖</h1>
+        <div id="typingText"></div>
+        <div id="imagesArea">
+            <img class="modalTriggerImg" src="https://img2.pic.in.th/pic/b45447d2-7d31-437e-be6f-adba5cecba7b.jpg" alt="รูปแรก">
+            <img class="modalTriggerImg" src="https://img2.pic.in.th/pic/3374e739-d4b2-405a-9adf-a404aa24025a.jpg" alt="รูปที่สอง">
+        </div>
+        <button id="resetBtn" style="display:none;">ดูใหม่อีกครั้ง</button>
+    </div>
+
+    <!-- หัวใจใหญ่ตอนกดตกลง -->
+    <div id="bigHeart"></div>
+
+    <!-- Modal -->
+    <div id="modalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalMessage" tabindex="-1">
+        <div id="modalContent" role="document">
+            <p id="modalMessage">จดทะเบียนกับเค้านะที่รัก</p>
+            <div id="modalButtons">
+                <button id="modalYes">ตกลง 💕</button>
+                <button id="modalNo">ไม่ตกลง 😢</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const startBtn = document.getElementById("startBtn");
+    const introSection = document.getElementById("introSection");
+    const surpriseContent = document.getElementById("surpriseContent");
+    const typingText = document.getElementById("typingText");
+    const imagesArea = document.getElementById("imagesArea");
+    const resetBtn = document.getElementById("resetBtn");
+    const music = document.getElementById("bgMusic");
+    const heartBeatSound = document.getElementById("heartBeatSound");
+    const bigHeart = document.getElementById("bigHeart");
+
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalMessage = document.getElementById("modalMessage");
+    const modalYes = document.getElementById("modalYes");
+    const modalNo = document.getElementById("modalNo");
+
+    const message = `ขอบคุณที่อยู่เคียงข้างกันเสมอมาจนครบ 8 เดือน อยากอยู่ไปเรื่อยๆจนมีลูกเลย ถึงเราจะทะเลาะกันบ้างแต่อ้วนก็ไม่ทิ้งเค้าไปไหน
+ตั้งแต่อ้วนเข้ามาเค้ารู้สึกว่าคน..คนนี้แหละคือคู่ชีวิตเค้า
+ขอบคุณที่ทำให้ชีวิตเค้าดีขึ้นมีความรับผิดชอบมากขึ้น อยากจะขอโทษทุกๆอย่างที่ทำให้อ้วนเสียใจ หงุดหงิดหรืออารมณ์ไม่ดี
+เค้าอยากอยู่กับอ้วนไปจนแก่เลย เค้าว่ามันถึงเวลาแล้วนะ...กดที่รูปไหนก็ได้เลยที่รัก 💕`;
+
+    // ฟังก์ชันพิมพ์ข้อความทีละตัว
+    function typeWriter(text, element, speed = 40, callback=null) {
+        let i = 0;
+        element.textContent = '';
+        function typing() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typing, speed);
+            } else if(callback) {
+                callback();
+            }
+        }
+        typing();
+    }
+
+    startBtn.addEventListener("click", () => {
+        introSection.style.display = "none";
+        surpriseContent.style.display = "block";
+
+        music.play();
+
+        // เคลียร์ข้อความเก่า และซ่อนปุ่มรีเซ็ต
+        typingText.textContent = '';
+        resetBtn.style.display = 'none';
+
+        // เรียกพิมพ์ข้อความทีละตัว
+        typeWriter(message, typingText);
+
+        // ใส่ event ให้กับรูปทุกภาพที่มี class "modalTriggerImg"
+        const imgs = document.querySelectorAll(".modalTriggerImg");
+        imgs.forEach(img => {
+            img.addEventListener("click", () => {
+                showModal();
+            });
+        });
+    });
+
+    function showModal() {
+        modalMessage.textContent = "จดทะเบียนกับเค้านะที่รัก";
+        modalYes.style.display = "inline-block";
+        modalNo.style.display = "inline-block";
+        modalOverlay.style.display = "flex";
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        modalYes.focus();
+
+        modalYes.disabled = false;
+        modalNo.disabled = false;
+    }
+
+    function hideModal() {
+        modalOverlay.style.display = "none";
+        modalOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    modalYes.addEventListener("click", () => {
+        modalMessage.textContent = "ขอบคุณนะที่เลือกให้เค้าดูแลอ้วนไปตลอดชีวิตที่เหลือ 💖";
+        modalYes.disabled = true;
+        modalNo.disabled = true;
+
+        // เล่นเสียงหัวใจเต้น
+        heartBeatSound.currentTime = 0;
+        heartBeatSound.play();
+
+        // แสดงหัวใจใหญ่และแอนิเมชันแตกเป็นหัวใจเล็ก ๆ
+        showBigHeart();
+
+        // แสดงปุ่มรีเซ็ตให้กด
+        resetBtn.style.display = 'inline-block';
+
+        setTimeout(() => {
+            hideModal();
+        }, 3000);
+    });
+
+    modalNo.addEventListener("click", () => {
+        modalMessage.textContent = "แน่ใจจริงๆ หรอ..";
+        // modal ไม่ปิด ให้กดใหม่ได้จนกว่าจะกดตกลงจริง ๆ
+    });
+
+    // คลิกพื้นที่ว่างภายนอก modal ปิด modal
+    modalOverlay.addEventListener('click', (e) => {
+        if(e.target === modalOverlay){
+            hideModal();
+        }
+    });
+
+    // ฟังก์ชันแสดงหัวใจใหญ่ + แตกเป็นหัวใจเล็ก ๆ
+    function showBigHeart() {
+        bigHeart.style.animation = 'none'; // รีเซ็ตแอนิเมชัน
+        bigHeart.style.transform = 'translate(-50%, -50%) scale(0)';
+        bigHeart.style.opacity = '1';
+        bigHeart.style.display = 'block';
+
+        // เล่นแอนิเมชัน pop
+        void bigHeart.offsetWidth; // รีเฟรชแอนิเมชัน
+        bigHeart.style.animation = 'bigHeartPop 1s forwards';
+
+        // หลังแอนิเมชันใหญ่เสร็จ ให้ปล่อยหัวใจเล็ก ๆ ลอยขึ้น
+        setTimeout(() => {
+            bigHeart.style.display = 'none';
+            createFloatingHearts(15);
+        }, 1000);
+    }
+
+    // ฟังก์ชันสร้างหัวใจเล็ก ๆ ลอยขึ้น
+    function createFloatingHearts(count) {
+        for(let i=0; i<count; i++) {
+            setTimeout(() => {
+                createHeart();
+            }, i * 150);
+        }
+    }
+
+    // หัวใจลอยขึ้นสวย ๆ (แบบเดิม)
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+
+        const size = 15 + Math.random() * 15;
+        heart.style.width = size + "px";
+        heart.style.height = size + "px";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+        document.body.appendChild(heart);
+
+        heart.addEventListener("animationend", () => {
+            heart.remove();
+        });
+    }
+    setInterval(createHeart, 300);
+
+    // ปุ่มรีเซ็ต
+    resetBtn.addEventListener('click', () => {
+        // หยุดเพลง
+        music.pause();
+        music.currentTime = 0;
+
+        // ซ่อน surpriseContent, แสดง intro ใหม่
+        surpriseContent.style.display = "none";
+        introSection.style.display = "block";
+
+        // หยุดเสียงหัวใจถ้าเล่นอยู่
+        heartBeatSound.pause();
+        heartBeatSound.currentTime = 0;
+
+        // เคลียร์ข้อความพิมพ์ และซ่อนปุ่มรีเซ็ต
+        typingText.textContent = '';
+        resetBtn.style.display = 'none';
+    });
+</script>
+</body>
+</html>
